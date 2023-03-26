@@ -1,11 +1,12 @@
 import socks
 import socket
 
+
 # Replace this with the location of your proxy list file
-PROXY_LIST_FILE = 'proxy_list.txt'
+PROXY_LIST_FILE = 'lt.txt'
 
 # Replace this with the URL you want to test
-TEST_URL = 'https://www.example.com/'
+TEST_URL = 'https://httpbin.org/ip'
 
 # Load the proxy list
 with open(PROXY_LIST_FILE, 'r') as f:
@@ -23,7 +24,7 @@ for proxy in proxy_list:
     # Try to connect to the test URL
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.connect((socket.gethostbyname(TEST_URL), 80))
+        s.connect((socket.gethostbyname(TEST_URL), 443))
         print(f'{proxy} is working')
     except Exception as e:
         print(f'{proxy} is not working: {e}')
