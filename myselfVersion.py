@@ -18,7 +18,7 @@ for proxy in proxy_list:
 
     print(proxy_dic)
     try:
-        res = requests.get(url, headers=headers, proxies=proxy_dic)
+        res = requests.get(url, headers=headers, proxies=proxy_dic, timeout=5)
         print('Статус подключения',res.status_code,'Адрес:', res.text)
         list_ready+=host+':'+ port+'\n'
     except Exception as e:

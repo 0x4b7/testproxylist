@@ -1,11 +1,10 @@
-
 import aiohttp
 import asyncio
-
+from aiohttp_socks import ProxyType, ProxyConnector, ChainProxyConnector
 
 
 async def test_proxy(proxy):
-    async with aiohttp.ClientSession(connector=aiohttp.SocksConnector.from_url(proxy)) as session:
+    async with aiohttp.ClientSession(connector= ProxyConnector.from_url(proxy )) as session:
         try:
             async with session.get('https://httpbin.org/ip') as response:
                 if response.status == 200:
@@ -15,12 +14,15 @@ async def test_proxy(proxy):
         except Exception as e:
             print(f"{proxy} is not working: {e}")
 
+
 async def main():
     with open('lt.txt', 'r') as f:
-        file = list(f.read().split())
-        proxies = ['socks4://' + a[0] + ':' + a[1] for a in zip(file[::2], file[1::2])]
+        file = f.read()
+        proxies = ['socks4://' + p.split(':')[0] + ':' + p.split(':')[1] for p in file.split()]
+
     tasks = [asyncio.create_task(test_proxy(proxy)) for proxy in proxies]
     await asyncio.gather(*tasks)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
