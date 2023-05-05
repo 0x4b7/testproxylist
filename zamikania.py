@@ -11,6 +11,11 @@ print(closure(3))
 outer_function(40)
 print(closure(1))
 
+closure = outer_function()
+print(closure(6))
+
+
+
 closure = outer_function(50)
 print(closure(6))
 
